@@ -1,11 +1,23 @@
-from mailmerge import MailMerge
-from datetime import datetime
-import os
-import pandas as pd
 import csv
+import glob
+import os
+from datetime import datetime
+
+import pandas as pd
+from mailmerge import MailMerge
 
 a = pd.read_csv("contacts.csv")
 b = pd.read_csv("deals.csv")
+
+save_dir = 'merge_output/'
+
+# If merge_output exists it deletes all files inside it, otherwise creates merge_output
+if os.path.exists(save_dir):
+    _files = glob.glob('merge_output/*')
+    for f in _files:
+        os.remove(f)
+else:
+    os.makedirs(save_dir)
 
 b.rename(columns={'Associated Contact IDs': 'Contact ID'}, inplace=True)
 
@@ -50,7 +62,7 @@ with open('filtered_csv.csv') as file:
         document = MailMerge(template)
         document.merge(
             # Edit Merge Fields:
-            #Template_Merge_Field = merge_fields[location]
+            # Template_Merge_Field = merge_fields[location]
             Phone_2=merge_fields[0],
             Phone_3=merge_fields[1],
             Phone_4=merge_fields[2],
@@ -68,11 +80,7 @@ with open('filtered_csv.csv') as file:
             Consultant=merge_fields[14],
             Appointment_Date_Time=merge_fields[15],
         )
-        # Create Output Directory
-        if not os.path.exists('merge_output/'):
-            os.makedirs('merge_output/')
 
-        save_dir = 'merge_output/'
         save_path = os.path.join(save_dir, f'In-Home-{Deal_Name}.docx')
 
         document.write(save_path)

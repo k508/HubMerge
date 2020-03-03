@@ -52,3 +52,6 @@ Adjust the 'document.merge' function to match the merge fields to their respecti
             Appointment_Date_Time=merge_fields[15],
         )
 ```
+## Updates
+- Modified the script to delete the temporary csv files after they are no longer required.
+- Script will create the output directory if one doesn't exist instead of crashing.

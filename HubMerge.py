@@ -65,7 +65,14 @@ with open('filtered_csv.csv') as file:
             Appointment_Date_Time=merge_fields[15],
         )
 
+        if not os.path.exists('merge_output/'):
+            os.makedirs('merge_output/')
+
         save_dir = 'merge_output/'
         save_path = os.path.join(save_dir, f'In-Home-{Deal_Name}.docx')
 
         document.write(save_path)
+        
+os.remove('filtered_csv.csv')
+os.remove('output.csv')
+        

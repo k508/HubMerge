@@ -8,20 +8,25 @@ from mailmerge import MailMerge
 
 a = pd.read_csv("contacts.csv")
 b = pd.read_csv("deals.csv")
+print("Selecting Files...")
 
 save_dir = 'merge_output/'
 
 # If merge_output exists it deletes all files inside it, otherwise creates merge_output
 if os.path.exists(save_dir):
+    print("merge_output directory exists")
     _files = glob.glob('merge_output/*')
     for f in _files:
         os.remove(f)
+        print("Deleting old files..")
 else:
     os.makedirs(save_dir)
+    print("merge_output doesn't exist. Creating directory.")
 
 b.rename(columns={'Associated Contact IDs': 'Contact ID'}, inplace=True)
 
 # Combine and filter csvs
+print("Combining CSVs based on Contact ID")
 merged = a.merge(b, on="Contact ID")
 merged.to_csv("output.csv", index=False)
 
@@ -29,15 +34,16 @@ merge_fields = ['Phone Number', 'Appointment State/Region', 'Appointment Date', 
                 'Conference Venues', 'Pms ID', 'Appointment Postal Code', 'Email', 'Conference Date', 'Appointment Date Time', 'Deal Name', 'Phone 4', 'Phone 2', 'Phone 3']
 
 filtered_csv = pd.read_csv("output.csv", usecols=merge_fields)
-
+print("Filtering Merge Fields..")
 filtered_csv.to_csv("filtered_csv.csv", index=False)
 
 # Start Mail Merge
+print("Selecting template file.")
 template = 'template.docx'
 
 document = MailMerge(template)
 
-
+print("Starting Mail Merge..")
 with open('filtered_csv.csv') as file:
     reader = csv.reader(file, delimiter=',')
     next(reader)
@@ -84,7 +90,9 @@ with open('filtered_csv.csv') as file:
         save_path = os.path.join(save_dir, f'In-Home-{Deal_Name}.docx')
 
         document.write(save_path)
+        print("Created ", Deal_Name)
 
 # Delete temporary CSVs
+print("Cleaning up temporary files..")
 os.remove('filtered_csv.csv')
 os.remove('output.csv')

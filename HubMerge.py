@@ -31,6 +31,7 @@ with open('filtered_csv.csv') as file:
     next(reader)
     for merge_fields in reader:
         if merge_fields[11] != '':
+            # Appointment Date Format to dd-mm-yyyy
             appointment_datetime_object = datetime.strptime(
                 merge_fields[11], '%Y-%m-%d')
             appointment_datetime_format = datetime.strftime(
@@ -38,6 +39,7 @@ with open('filtered_csv.csv') as file:
         else:
             appointment_datetime_format = merge_fields[11]
         if merge_fields[5] != '':
+            # Conference Date Format to dd-mm-yyyy
             conf_datetime_object = datetime.strptime(
                 merge_fields[5], '%Y-%m-%d')
             conf_datetime_format = datetime.strftime(
@@ -47,6 +49,8 @@ with open('filtered_csv.csv') as file:
         Deal_Name = merge_fields[12]
         document = MailMerge(template)
         document.merge(
+            # Edit Merge Fields:
+            #Template_Merge_Field = merge_fields[location]
             Phone_2=merge_fields[0],
             Phone_3=merge_fields[1],
             Phone_4=merge_fields[2],
@@ -64,7 +68,7 @@ with open('filtered_csv.csv') as file:
             Consultant=merge_fields[14],
             Appointment_Date_Time=merge_fields[15],
         )
-
+        # Create Output Directory
         if not os.path.exists('merge_output/'):
             os.makedirs('merge_output/')
 
@@ -72,7 +76,7 @@ with open('filtered_csv.csv') as file:
         save_path = os.path.join(save_dir, f'In-Home-{Deal_Name}.docx')
 
         document.write(save_path)
-        
+
+# Delete temporary CSVs
 os.remove('filtered_csv.csv')
 os.remove('output.csv')
-        

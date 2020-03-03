@@ -55,3 +55,4 @@ Adjust the 'document.merge' function to match the merge fields to their respecti
 ## Updates
 - Modified the script to delete the temporary csv files after they are no longer required.
 - Script will create the output directory if one doesn't exist instead of crashing.
+- Added check for merge_output directory. If it exists it will empty the directory before file merge, otherwise creates directory.

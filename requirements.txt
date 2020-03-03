@@ -1,0 +1,3 @@
+docx_mailmerge==0.5.0
+pandas==1.0.1
+mailmerge==2.1.0

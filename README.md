@@ -1,22 +1,38 @@
 # HubMerge
 Combine Deals and Contacts exports from Hubspot into a single useable document that can be filtered and mail merged using a docx template.
 
-#Instructions
-Export required information from Deals section on Hubspot, rename the file "deal.csv" and save it in the application directory. Select all properties for the export as we are going to filter out what we don't need anyway.
-Export required contact information relating to the Deals and save it as "contacts.csv" inside the application directory.
-Save your word document template with the matching merge fields as "template.docx" inside the application directory.
+# Instructions
+* Export required information from Deals section on Hubspot, rename the file "deal.csv" and save it in the application directory. Select all properties for the export as we are going to filter out what we don't need anyway.
+* Export required contact information relating to the Deals and save it as "contacts.csv" inside the application directory.
+* Save your word document template with the matching merge fields as "template.docx" inside the application directory.
 
-Run the application.
+* Run the application.
 
-#Modifying the script for your own use
+# Modifying the script for your own use
 
 You will likely need to adjust the fields being filtered to match what you need in your own template which you can do by editing the 'usecols' argument on the 'merge_fields' variable.
 
-merge_fields = ['Phone Number', 'Appointment State/Region', 'Appointment Date', 'Appointment Street Address', 'Consultant', 'Appointment City',
-                'Conference Venues', 'Pms ID', 'Appointment Postal Code', 'Email', 'Conference Date', 'Appointment Date Time', 'Deal Name', 'Phone 4', 'Phone 2', 'Phone 3']
+```
+merge_fields = ['Phone Number', 
+'Appointment State/Region', 
+'Appointment Date', 
+'Appointment Street Address', 
+'Consultant', 
+'Appointment City', 
+'Conference Venues', 
+'Pms ID', 
+'Appointment Postal Code', 
+'Email', 
+'Conference Date', 
+'Appointment Date Time', 
+'Deal Name', 
+'Phone 4', 
+'Phone 2', 
+'Phone 3']
+```
 
 Adjust the 'document.merge' function to match the merge fields to their respective names inside of your template document:
-
+```
  document.merge(
             Phone_2=merge_fields[0],
             Phone_3=merge_fields[1],
@@ -35,3 +51,4 @@ Adjust the 'document.merge' function to match the merge fields to their respecti
             Consultant=merge_fields[14],
             Appointment_Date_Time=merge_fields[15],
         )
+```

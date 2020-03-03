@@ -12,11 +12,27 @@ Combine Deals and Contacts exports from Hubspot into a single useable document t
 
 You will likely need to adjust the fields being filtered to match what you need in your own template which you can do by editing the 'usecols' argument on the 'merge_fields' variable.
 
-merge_fields = ['Phone Number', 'Appointment State/Region', 'Appointment Date', 'Appointment Street Address', 'Consultant', 'Appointment City',
-                'Conference Venues', 'Pms ID', 'Appointment Postal Code', 'Email', 'Conference Date', 'Appointment Date Time', 'Deal Name', 'Phone 4', 'Phone 2', 'Phone 3']
+```
+merge_fields = ['Phone Number', 
+'Appointment State/Region', 
+'Appointment Date', 
+'Appointment Street Address', 
+'Consultant', 
+'Appointment City', 
+'Conference Venues', 
+'Pms ID', 
+'Appointment Postal Code', 
+'Email', 
+'Conference Date', 
+'Appointment Date Time', 
+'Deal Name', 
+'Phone 4', 
+'Phone 2', 
+'Phone 3']
+```
 
 Adjust the 'document.merge' function to match the merge fields to their respective names inside of your template document:
-
+```
  document.merge(
             Phone_2=merge_fields[0],
             Phone_3=merge_fields[1],
@@ -35,3 +51,4 @@ Adjust the 'document.merge' function to match the merge fields to their respecti
             Consultant=merge_fields[14],
             Appointment_Date_Time=merge_fields[15],
         )
+```

@@ -6,7 +6,7 @@ from datetime import datetime
 import pandas as pd
 from mailmerge import MailMerge
 
-from header import print_header
+from functions import print_header, close_app
 
 print_header()
 
@@ -100,3 +100,5 @@ with open('filtered_csv.csv') as file:
 print("Cleaning up temporary files..")
 os.remove('filtered_csv.csv')
 os.remove('output.csv')
+
+close_app()

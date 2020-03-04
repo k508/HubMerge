@@ -6,6 +6,10 @@ from datetime import datetime
 import pandas as pd
 from mailmerge import MailMerge
 
+from header import print_header
+
+print_header()
+
 a = pd.read_csv("contacts.csv")
 b = pd.read_csv("deals.csv")
 print("Selecting Files...")

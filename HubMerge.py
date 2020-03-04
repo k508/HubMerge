@@ -2,16 +2,28 @@ import csv
 import glob
 import os
 from datetime import datetime
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
 import pandas as pd
 from mailmerge import MailMerge
 
-from functions import print_header, close_app
+from functions import close_app, print_header
 
 print_header()
 
-a = pd.read_csv("contacts.csv")
-b = pd.read_csv("deals.csv")
+root = Tk()
+root.withdraw()
+
+contact_csv = askopenfilename(initialdir="self.__base_filepath", title="Select Contacts CSV", filetypes=(
+    ("CSV Files", "*.csv"), ("All Files", "*")))
+print("You have selected", contact_csv)
+deal_csv = askopenfilename(initialdir="self.__base_filepath", title="Select Deals CSV", filetypes=(
+    ("CSV Files", "*.csv"), ("All Files", "*")))
+print("YOu have selected", deal_csv)
+
+a = pd.read_csv(contact_csv)
+b = pd.read_csv(deal_csv)
 print("Selecting Files...")
 
 save_dir = 'merge_output/'

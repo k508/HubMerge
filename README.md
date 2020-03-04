@@ -2,11 +2,14 @@
 Combine Deals and Contacts exports from Hubspot into a single useable document that can be filtered and mail merged using a docx template.
 
 # Instructions
-* Export required information from Deals section on Hubspot, rename the file ```deal.csv``` and save it in the application directory. Select all properties for the export as we are going to filter out what we don't need anyway. (Filter by ```Deal Stage``` & ```Appointment Date```)
-* Export required contact information relating to the Deals and save it as ```contacts.csv``` inside the application directory. Again, export all properties. (Filter by ```Next Activity Date```)
+* Export required information from Deals section on Hubspot and save it in the application directory. Select all properties for the export as we are going to filter out what we don't need anyway. (Filter by ```Deal Stage``` & ```Appointment Date```)
+* Export required contact information relating to the Deals and save it inside the application directory. Again, export all properties. (Filter by ```Next Activity Date```)
 * Save your word document template with the matching merge fields as ```template.docx``` inside the application directory.
 
 * Run the application.
+- Select Contact Export
+- Select Deals Export
+- Open output directory to find merged documents
 
 # Modifying the script for your own use
 
@@ -60,3 +63,4 @@ Adjust the ```document.merge``` function to match the merge fields to their resp
 - Added ```close_app``` function so the end user can make sure everything was executed correctly.
 - Updated ```requirements.txt```. Can now be installed by running ```pip install -r requirements.txt``` in the root directory.
 - Fixed bug with function requiring raw input.
+- Changed file selection functionality. Files are no longer automatically selected but are instead prompted for selection removing the requirement of changing the names.

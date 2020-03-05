@@ -47,7 +47,7 @@ merged = a.merge(b, on="Contact ID")
 merged.to_csv("output.csv", index=False)
 
 merge_fields = ['Phone Number', 'Appointment State/Region', 'Appointment Date', 'Appointment Street Address', 'Consultant', 'Appointment City',
-                'Conference Venues', 'Pms ID', 'Appointment Postal Code', 'Email', 'Conference Date', 'Appointment Date Time', 'Deal Name', 'Phone 4', 'Phone 2', 'Phone 3']
+                'Conference Venues', 'Pms ID', 'Appointment Postal Code', 'Email', 'Conference Date', 'Appointment Date Time', 'Deal Name', 'Phone 4', 'Phone 2', 'Phone 3', 'Consultant Note']
 
 filtered_csv = pd.read_csv("output.csv", usecols=merge_fields)
 print("Filtering Merge Fields..")
@@ -55,7 +55,7 @@ filtered_csv.to_csv("filtered_csv.csv", index=False)
 
 # Start Mail Merge
 print("Selecting template file.")
-template = 'template.docx'
+template = 'In-Home-Template.docx'
 
 document = MailMerge(template)
 
@@ -80,7 +80,14 @@ with open('filtered_csv.csv') as file:
                 conf_datetime_object, '%d-%m-%Y')
         else:
             conf_datetime_format = merge_fields[5]
-        Deal_Name = merge_fields[12]
+        #Add zero to number if excel stripped it
+        raw_number = merge_fields[4]
+        if len(raw_number) == 9:
+            n = 1 # number of zeros to add
+            res = raw_number.rjust(n + len(raw_number), '0')
+            merge_fields[4] = res
+        
+        Deal_Name = merge_fields[13]
         document = MailMerge(template)
         document.merge(
             # Edit Merge Fields:
@@ -97,20 +104,23 @@ with open('filtered_csv.csv') as file:
             Appointment_StateRegion=merge_fields[9],
             Appointment_City=merge_fields[10],
             Appointment_Date=appointment_datetime_format,
-            Deal_Name=merge_fields[12],
-            Appointment_Street_Address=merge_fields[13],
-            Consultant=merge_fields[14],
-            Appointment_Date_Time=merge_fields[15],
-        )
+            Consultant_Note=merge_fields[12],
+            Deal_Name=Deal_Name,
+            Appointment_Street_Address=merge_fields[14],
+            Consultant=merge_fields[15],
+            Appointment_Date_Time=merge_fields[16],
+            )
 
         save_path = os.path.join(save_dir, f'In-Home-{Deal_Name}.docx')
 
         document.write(save_path)
-        print("Created ", Deal_Name)
+        print("Created", Deal_Name)
 
 # Delete temporary CSVs
 print("Cleaning up temporary files..")
 os.remove('filtered_csv.csv')
 os.remove('output.csv')
+os.remove(contact_csv)
+os.remove(deal_csv)
 
 close_app()
